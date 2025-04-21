@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Startup Events</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    .Wrapper {
+      width: 90%;
+      max-width: 1536px;
+      margin-inline: auto;
+      position: relative;
+      height: 100px;
+      margin-top: 100px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      mask-image: linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,1) 20%, rgba(0,0,0,1) 80%, rgba(0,0,0,0));
+    }
+    .scroll-container {
+      display: flex;
+      animation: scrollleft 50s linear infinite;
+    }
+    .scroll-text {
+      font-size: 40px;
+      font-weight: bold;
+      color: black;
+      background-color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+    @keyframes scrollleft {
+      0% {
+        transform: translateX(100%);
+      }
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+    .icontainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #1e1e1e;
+  text-align: center;
+  padding: 20px;
+  box-shadow: inset 0 0 50px rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  margin: 40px auto;
+  max-width: 50%;
+  box-sizing: border-box;
+}
+
+.heading {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+.carousel-wrapper {
+  text-align: center;
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.carousel-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+.carousel {
+  display: flex;
+  transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.slide {
+  min-width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  transition: transform 0.5s ease;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: white;
+  position: relative;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit:cover; 
+  border-radius: 15px;
+  /* box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3); */
+}
+
+.slide-title {
+  position: absolute;
+  bottom: 0;
+  /* background: rgba(0, 0, 0, 0.8); */
+  color: #ffffff;
+  padding: 12px;
+  width: 100%;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+.dot-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.dot {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin: 0 6px;
+  border-radius: 50%;
+  background-color: #ece9e9;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
+}
+
+.active-dot {
+  background-color: #ffffff;
+  transform: scale(1.2);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.9);
+}
+
+.nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  padding: 12px;
+  cursor: pointer; 
+  font-size: 22px;
+  color: white;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .heading {
+    font-size: 2rem;
+  }
+
+  .slide-title {
+    font-size: 1rem;
+    /* padding: 10px; */
+  }
+
+  .nav-button {
+    padding: 8px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .heading {
+    font-size: 1.5rem;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    margin: 0 4px;
+  }
+
+  .carousel-container {
+    border-radius: 10px;
+
+  }
+
+  .slide img {
+    border-radius: 10px;
+    object-fit: cover;
+  }
+}
+@keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  .float-text {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+  <header class="bg-gray-900 text-white py-6">
+    <div class="container mx-auto flex justify-between items-center px-4">
+      <h1 class="text-3xl font-bold">Startup Events</h1>
+      <nav>
+        <ul class="flex space-x-6 text-lg">
+          <li><a href="#" class="hover:text-blue-400">Home</a></li>
+          <li><a href="events.html" class="hover:text-blue-400" target="_blank">Events</a></li>
+          <li><a href="aboutus.html" class="hover:text-blue-400 " target="_blank">About Us</a></li>
+          <li><a href="contactus.html" class="hover:text-blue-400" target="_blank">Contact Us</a></li>
+          <li><a href="Login.html" class="hover:text-blue-400" target="_blank">Log out</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="bg-gradient-to-r from-blue-600 to-teal-400 text-white py-20 text-center px-4">
+    <div class="max-w-4xl mx-auto">
+      <h1 class="text-5xl font-bold mb-6 float-text">
+        Discover & Share Global Startup Events
+      </h1>
+      <p class="text-xl mb-8">
+        Explore exciting online startup events, pitch sessions, and webinars from around the world.
+      </p>
+      <a href="events.html" class="inline-block bg-white text-blue-600 font-semibold px-6 py-3 rounded hover:bg-blue-600 hover:text-white transition">
+        Browse Events
+      </a>
+    </div>
+  </section>
+  
+
+  <div class="Wrapper">
+    <div class="scroll-container">
+      <div class="scroll-text">🚀 Upcoming Startup Events: Global StartUp on 12th | StartUp Boards on 14th |Maldova Summit on 16th | @3Pitch investors meet on 17th | Network on 19th | B2 Online on 20th | Silicon Valley on 27th | Tech Innovation on 15th | VNTR Round Tabe on 28th | Funding Network on 02th </div>
+    </div>
+  </div>
+
+  <!-- Carousel Section -->
+  <div class="icontainer">
+    <div class="heading">On Going StartUp Events</div>
+    <div class="carousel-wrapper">
+      <button class="nav-button prev" onclick="prevSlide()">&#10094;</button>
+      <div class="carousel-container">
+        <div class="carousel" id="carousel">
+          <div class="slide">
+            <img src="event1.png" alt="Startup Event 1">
+            <div class="slide-title">LinkedIn Network & Learn Live Event</div>
+          </div>
+          <div class="slide">
+            <img src="event2.png" alt="Startup Event 2">
+            <div class="slide-title">Global Startup Summit Bengaluru</div>
+          </div>
+          <div class="slide">
+            <img src="startupgrind.png" alt="Startup Event 3">
+            <div class="slide-title">VNTR Investor Roundtable</div>
+          </div>
+          <div class="slide">
+            <img src="Moldova.png" alt="Startup Event 4">
+            <div class="slide-title">Startup Moldova Summit 2025</div>
+          </div>
+          <div class="slide">
+            <img src="Silicon_valley.png" alt="Startup Event 5">
+            <div class="slide-title">Lleva tu empresa o startup </div>
+          </div>
+          <div class="slide">
+            <img src="Bombay.png" alt="Startup Event 6">
+            <div class="slide-title">The Startup Network, Edition 12</div>
+          </div>
+        </div>
+      </div>
+      <button class="nav-button next" onclick="nextSlide()">&#10095;</button>
+      <div class="dot-container">
+        <div class="dot" onclick="goToSlide(0)"></div>
+        <div class="dot" onclick="goToSlide(1)"></div>
+        <div class="dot" onclick="goToSlide(2)"></div>
+        <div class="dot" onclick="goToSlide(3)"></div>
+        <div class="dot" onclick="goToSlide(4)"></div>
+        <div class="dot" onclick="goToSlide(5)"></div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <script>
+    let currentIndex = 0;
+    const slides = document.querySelectorAll(".slide");
+    const totalSlides = slides.length;
+  
+    function updateCarousel() {
+      const carousel = document.getElementById("carousel");
+      carousel.style.transform = `translateX(-${currentIndex * 100}%)`; // Use percentage instead of px
+      updateDots();
+    }
+  
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % totalSlides;
+      updateCarousel();
+    }
+  
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      updateCarousel();
+    }
+  
+    function goToSlide(index) {
+      currentIndex = index;
+      updateCarousel();
+    }
+  
+    function updateDots() {
+      const dots = document.querySelectorAll(".dot");
+      dots.forEach((dot, i) => {
+        dot.classList.toggle("active-dot", i === currentIndex);
+      });
+    }
+  
+    // Initial call to activate the first dot
+    updateDots();
+  </script>
+  
+
+
+
+  <section class="py-12 px-4 ">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-8">Interactive Calendar</h2>
+      <div class="bg-white shadow-lg rounded-lg p-6">
+        <div class="flex justify-between items-center mb-6">
+          <button id="prev" class="px-6 py-3 bg-gray-300 rounded text-xl">&#8592;</button>
+          <h2 id="monthYear" class="text-3xl font-semibold"></h2>
+          <button id="next" class="px-6 py-3 bg-gray-300 rounded text-xl">&#8594;</button>
+        </div>
+        <div class="grid grid-cols-7 gap-4 text-center text-gray-600 text-2xl ">
+          <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+        </div>
+        <div id="calendar" class="grid grid-cols-7 gap-4 mt-4 text-2xl"></div>
+        <div id="eventDetails" class="mt-6 p-6 bg-blue-100 rounded hidden">
+          <h3 class="text-2xl font-semibold">Event Details</h3>
+          <p id="eventDate" class="mt-2 font-semibold"></p>
+          <p id="eventLocation" class="mt-2 font-semibold"></p>
+          <p id="eventInfo" class="mt-3 text-lg"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-black text-white px-6 py-12">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
+      
+      <!-- Logo & Tagline -->
+      <div>
+        <div class="inline-flex border border-white">
+          <div class="bg-gradient-to-r from-green-400 to-blue-500 px-4 py-4 text-black font-bold">
+            THE
+          </div>
+          <div class="text-white bg-black px-4 py-2 font-bold">
+            STARTUP EVENTS
+          </div>
+        </div>
+        <p class="uppercase font-bold text-sm">
+          One event, a hundred visions<br>
+          <span class="text-green-400">infinite possibilities<br></span>
+        </p>
+      </div>
+  
+      <!-- Navigation Links -->
+      <div>
+        <h3 class="text-blue-400 font-bold mb-4">Navigation</h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="hover:underline">About</a></li>
+          <li><a href="#" class="hover:underline">Terms</a></li>
+          <li><a href="#" class="hover:underline">Guidelines</a></li>
+          <li> <a href="#" class="hover:underline">Sponsors</a></li>
+         
+        </ul>
+      </div>
+  
+      <!-- Legal Links -->
+      <div>
+        <h3 class="text-blue-400 font-bold mb-4">Legal</h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="hover:underline">Terms & Conditions</a></li>
+          <li><a href="#" class="hover:underline">Privacy policy</a></li>
+          <li><a href="#" class="hover:underline">Cookie policy</a></li>
+        </ul>
+      </div>
+      
+    </div>
+  </footer>
+  
+
+  <script>
+    const monthYear = document.getElementById('monthYear');
+    const calendar = document.getElementById('calendar');
+    const prev = document.getElementById('prev');
+    const next = document.getElementById('next');
+    const eventDetails = document.getElementById('eventDetails');
+    const eventDate = document.getElementById('eventDate');
+    const eventLocation = document.getElementById('eventLocation');
+    const eventInfo = document.getElementById('eventInfo');
+
+    let date = new Date();
+    let currentMonth = date.getMonth();
+    let currentYear = date.getFullYear();
+
+    const events = {
+      '2025-04-12': {
+        date: 'April 12-04, 2025',
+        location: 'Bengaluru, India',
+        description: "A platform for investors, aspiring entrepreneurs and business owners to start, manage & grow their business."
+      },
+      '2025-04-14': {
+        date: 'April 14-04, 2025',
+        location: 'Melbourne, Australia',
+        description: "Assemble and lead your Advisory Board or Board of Directors."
+      },
+      '2025-04-16': {
+        date: 'April 04-16, 2025',
+        location: 'Chișinău, Chișinău, Moldova',
+        description: " we bring together founders, investors, experts and innovation enthusiasts for a day full of discussions, networking and funding opportunities."
+      },
+      '2025-04-17': {
+        date: 'April 04-17, 2025',
+        location: 'Lehi, UT, United States',
+        description: "Startup Founders Pitch their Ideas to VC and Angel Investors every Third Thursday of the Month at 3 PM."
+      },
+      '2025-04-19': {
+        date: 'April 04-19, 2025',
+        location: 'Mumbai, India',
+        description: "Celebrating women in business."
+      },
+      '2025-04-20': {
+        date: 'April 04-20, 2025',
+        location: 'Online Event',
+        description: "Online Startup Showcase."
+      },
+      '2025-04-27': {
+        date: 'April 04-27, 2025',
+        location: 'Silicon Valley, USA',
+        description: "Lleva tu empresa o startup a Silicon Valley ."
+      },
+      '2025-04-28': {
+        date: 'April 04-28, 2025',
+        location: 'Silicon Valley, USA',
+        description: "Approved investors only."
+      },
+      '2025-05-02': {
+        date: 'April 04-19, 2025',
+        location: 'Online',
+        description: "Startup Funding and Networking."
+      },
+      '2025-05-24': {
+        date: 'April 04-19, 2025',
+        location: 'Online',
+        description: "LinkedIn Network & Learn Live Event: AI, Startups, Career, and Tech Trends."
+      }
+    };
+
+    function renderCalendar(month, year) {
+  calendar.innerHTML = '';
+  monthYear.innerText = `${new Date(year, month).toLocaleString('default', { month: 'long' })} ${year}`;
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  for (let i = 0; i < firstDay; i++) {
+    calendar.innerHTML += '<div></div>';
+  }
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    const eventKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    const hasEvent = events[eventKey];
+
+    calendar.innerHTML += `
+      <div 
+        class="p-6 text-center rounded-lg transition-all duration-300 transform 
+                ${hasEvent ? 'bg-blue-100 hover:scale-110 hover:bg-blue-300 cursor-pointer' : 'bg-gray-200'}"
+        onclick="handleDayClick(this, '${eventKey}')"
+      >
+        ${day}
+      </div>`;
+  }
+}
+
+function handleDayClick(element, eventKey) {
+  element.classList.add('scale-125');
+  setTimeout(() => {
+    element.classList.remove('scale-125');
+  }, 200);
+
+  showEvent(eventKey);
+}
+
+
+    function showEvent(eventKey) {
+      if (events[eventKey]) {
+        eventDate.innerText = `Date: ${events[eventKey].date}`;
+        eventLocation.innerText = `Location: ${events[eventKey].location}`;
+        eventInfo.innerText = `Description: ${events[eventKey].description}`;
+        eventDetails.classList.remove('hidden');
+      } else {
+        eventDetails.classList.add('hidden');
+      }
+    }
+
+    prev.addEventListener('click', () => {
+      currentMonth--;
+      if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+      }
+      renderCalendar(currentMonth, currentYear);
+      eventDetails.classList.add('hidden');
+    });
+
+    next.addEventListener('click', () => {
+      currentMonth++;
+      if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+      }
+      renderCalendar(currentMonth, currentYear);
+      eventDetails.classList.add('hidden');
+    });
+
+    renderCalendar(currentMonth, currentYear);
+  </script>
+  
+  
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <title>UniHub | Signup</title>
+  <link rel="icon" href="assets/website_logo.png" type="image/png" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+    * {
+      font-family: 'Poppins', sans-serif;
+    }
+    ::placeholder {
+      color: #999;
+    }
+    .input-icon {
+      position: absolute;
+      top: 50%;
+      left: 15px;
+      transform: translateY(-50%);
+      color: #999;
+    }
+    .error-message {
+      color: red;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-r from-white via-sky-200 to-blue-400 min-h-screen flex items-center justify-center">
+
+  <div class="bg-white shadow-2xl rounded-1xl flex w-full max-w-5xl overflow-hidden h-[650px]">
+    
+    <!-- Left Side: Info Section -->
+    <div class="w-1/2 bg-blue-500 text-white p-10 flex flex-col justify-center items-center h-full">
+      <h1 class="text-4xl font-bold mb-4">Join Us</h1>
+      <p class="text-lg text-center leading-relaxed">
+        Create your account and take the first step toward managing your university life effortlessly.
+      </p>
+    </div>
+
+    <!-- Right Side: Signup Form -->
+    <div class="w-1/2 p-10 h-full flex flex-col justify-center">
+      <div class="text-center mb-6">
+        <img src="https://cdn3.iconfinder.com/data/icons/userinterface-1/100/ui-06-512.png" alt="Avatar" class="w-32 h-32 rounded-full mx-auto mb-3" />
+        <h2 class="text-2xl font-semibold text-gray-700">Create Account</h2>
+      </div>
+
+      <form id="signupForm" class="space-y-5" action="api/signup.php" method="POST">
+        <div class="relative">
+          <i class="bx bx-user text-xl input-icon"></i>
+          <input type="text" name="full_name" id="full_name" placeholder="Full Name"
+            class="pl-10 pr-3 py-3 w-full rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400" required />
+          <div id="full_name_error" class="error-message"></div>
+        </div>
+
+        <div class="relative">
+          <i class="bx bx-user text-xl input-icon"></i>
+          <input type="text" name="username" id="username" placeholder="Username"
+            class="pl-10 pr-3 py-3 w-full rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400" required />
+          <div id="username_error" class="error-message"></div>
+        </div>
+
+        <div class="relative">
+          <i class="bx bx-envelope text-xl input-icon"></i>
+          <input type="email" name="email" id="email" placeholder="Email"
+            class="pl-10 pr-3 py-3 w-full rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400" required />
+          <div id="email_error" class="error-message"></div>
+        </div>
+
+        <div class="relative">
+          <i class="bx bx-phone text-xl input-icon"></i>
+          <input type="tel" name="phone" id="phone" placeholder="Phone Number (Optional)"
+            class="pl-10 pr-3 py-3 w-full rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+        </div>
+
+        <div class="relative">
+          <i class="bx bx-lock-alt text-xl input-icon"></i>
+          <input type="password" name="password" id="password" placeholder="Password"
+            class="pl-10 pr-3 py-3 w-full rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400" required />
+          <div id="password_error" class="error-message"></div>
+        </div>
+
+        <input type="submit" value="Sign Up"
+          class="w-full py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-full transition duration-300 cursor-pointer" />
+      </form>
+
+      <p class="text-center text-sm text-gray-700 mt-6">
+        Already have an account?
+        <a href="login.html" class="text-blue-600 hover:underline font-medium">Login</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Clear previous error messages
+      document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+      
+      const formData = new FormData(this);
+      
+      fetch('./api/signup.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'success') {
+          alert(data.message);
+          window.location.href = 'login.html';
+        } else {
+          // Display error messages
+          if (data.errors) {
+            Object.keys(data.errors).forEach(key => {
+              const errorElement = document.getElementById(`${key}_error`);
+              if (errorElement) {
+                errorElement.textContent = data.errors[key];
+              }
+            });
+          } else {
+            alert(data.message);
+          }
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+      });
+    });
+  </script>
+</body>
+</html>
