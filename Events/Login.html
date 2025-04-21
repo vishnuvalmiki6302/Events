@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <title>UniHub | Login</title>
+  <link rel="icon" href="assets/website_logo.png" type="image/png" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+    * {
+      font-family: 'Poppins', sans-serif;
+    }
+    ::placeholder {
+      color: #999;
+    }
+    .input-icon {
+      position: absolute;
+      top: 50%;
+      left: 15px;
+      transform: translateY(-50%);
+      color: #999;
+    }
+    .error-message {
+      color: red;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-r from-white via-sky-200 to-blue-400 min-h-screen flex items-center justify-center">
+
+  <div class="bg-white shadow-2xl rounded-1xl flex w-full max-w-5xl overflow-hidden h-[600px]">
+    
+    <!-- Right Side: Login Form -->
+    <div class="w-1/2 p-10 h-full flex flex-col justify-center">
+      <div class="text-center mb-6">
+        <img src="https://thumbs.dreamstime.com/b/user-login-authenticate-icon-vector-personal-protection-internet-privacy-password-protected-security-key-pad-161621864.jpg" alt="Avatar" class="w-32 h-32 rounded-full mx-auto mb-3" />
+        <h2 class="text-2xl font-semibold text-gray-700">Login to UniHub</h2>
+      </div>
+
+      <form id="loginForm" class="space-y-5" action="api/login.php" method="POST">
+        <div class="relative">
+          <i class="bx bx-user text-xl input-icon"></i>
+          <input type="text" name="username" id="username" placeholder="Username"
+            class="pl-10 pr-3 py-3 w-full rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400" required />
+          <div id="username_error" class="error-message"></div>
+        </div>
+        
+        <div class="relative">
+          <i class="bx bx-lock-alt text-xl input-icon"></i>
+          <input type="password" name="password" id="password" placeholder="Password"
+            class="pl-10 pr-3 py-3 w-full rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400" required />
+          <div id="password_error" class="error-message"></div>
+        </div>
+
+        <input type="submit" value="Sign In"
+          class="w-full py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-full transition duration-300 cursor-pointer" />
+      </form>
+
+      <div class="flex justify-between items-center text-sm text-gray-600 mt-4">
+        <label class="flex items-center">
+          <input type="checkbox" class="mr-2" id="login-check" />
+          Remember Me
+        </label>
+        <a href="#" class="hover:underline">Forgot password?</a>
+      </div>
+
+      <p class="text-center text-sm text-gray-700 mt-6">
+        Don't have an account?
+        <a href="signup.html" class="text-blue-600 hover:underline font-medium">Sign Up</a>
+      </p>
+    </div>
+    <!-- Left Side: Info Section -->
+    <div class="w-1/2 bg-blue-500 text-white p-10 flex flex-col justify-center items-center h-full">
+      <h1 class="text-4xl font-bold mb-4">Welcome to UniHub</h1>
+      <p class="text-lg text-center leading-relaxed">
+        Step Into the World of Startups – Stay Informed. Stay Ahead
+      </p>
+    </div>
+
+  </div>
+  
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Clear previous error messages
+      document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+      
+      const formData = new FormData(this);
+      
+      fetch('api/login.php', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (data.status === 'success') {
+          alert(data.message);
+          if (data.redirect) {
+            // Use the current path to construct the redirect URL
+            const currentPath = window.location.pathname;
+            const basePath = currentPath.substring(0, currentPath.lastIndexOf('/'));
+            window.location.href = basePath + '/' + data.redirect;
+          }
+        } else {
+          // Display error messages
+          if (data.errors) {
+            Object.keys(data.errors).forEach(key => {
+              const errorElement = document.getElementById(`${key}_error`);
+              if (errorElement) {
+                errorElement.textContent = data.errors[key];
+              }
+            });
+          } else {
+            // Show detailed error message if available
+            const errorMessage = data.debug ? `${data.message}\n\nDebug info: ${data.debug}` : data.message;
+            alert(errorMessage);
+          }
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.\n\nError details: ' + error.message);
+      });
+    });
+  </script>
+</body>
+</html>
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ -->

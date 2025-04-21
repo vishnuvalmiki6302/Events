@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile Page</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #e6f0ff;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .profile-box {
+      background-color: #fff;
+      width: 320px;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .profile-photo {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid #3b82f6;
+      margin-top: -80px;
+      background-color: #fff;
+    }
+
+    .info-text {
+      margin-top: 1.5rem;
+      text-align: left;
+    }
+
+    .info-text p {
+      margin: 0.6rem 0;
+      font-size: 1rem;
+      color: #333;
+    }
+
+    .info-text span {
+      font-weight: 600;
+      color: #3b82f6;
+    }
+
+    .logout-btn {
+      margin-top: 1.5rem;
+      padding: 0.6rem 1.5rem;
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .logout-btn:hover {
+      background-color: #1d4ed8;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="profile-box">
+    <img class="profile-photo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqf0Wx4wmsKfLYsiLdBx6H4D8bwQBurWhx5g&s" alt="Profile Photo">
+
+    <div class="info-text">
+      <p><span>Name:</span> John Doe</p>
+      <p><span>Email:</span> johndoe@example.com</p>
+      <p><span>Username:</span> johnd123</p>
+      <p><span>Phone:</span> (123)-456-7890</p>
+    </div>
+
+    <a href="Login.html"><button class="logout-btn">Logout</button></a>
+  </div>
+
+</body>
+</html>
